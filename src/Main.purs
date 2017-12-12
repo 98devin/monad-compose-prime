@@ -31,11 +31,11 @@ instance composeApply :: (Apply m) => Apply (Compose ms m) where
 
 
 instance composeApplicative :: (Applicative m) => Applicative (Compose ms m) where
-  pure a = Compose {} (pure a)
+  pure a = Compose { } (pure a)
 
 
 instance composeBind :: (Bind m) => Bind (Compose ms m) where
-  bind f (Compose ma) = Compose $ bind f ma
+  bind f (Compose ms ma) = Compose ms $ bind f ma
 
 
 instance composeMonad :: (Monad m) => Monad (Compose ms m)
@@ -48,6 +48,7 @@ class Composable m a (n :: # Type) | m a -> n where
   run  :: forall r m' b. Compose ( n r ) m' b -> m a
 
   with :: forall r m' b. Compose ( r ) m' b -> m a -> Compose ( n r ) m' b 
+
 
 
 
